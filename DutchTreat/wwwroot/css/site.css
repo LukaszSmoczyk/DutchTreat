@@ -19,5 +19,12 @@ label {
     background-color: lightgray;
 }
 
+#loginToggle {
+    cursor: pointer;
+}
 
+.popup-form{
+    padding: 5px;
+    border: 2px black outset;
+}
 
