@@ -1,13 +1,7 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Dutch Treat</title>
-    <link href="css/site.css" rel="stylesheet" />
-
-</head>
-<body>
-    <h2>Dutch Treat</h2>
-    <div>
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+    <div class="product-info">
         <img src="img/VanGogh.jpg" />
         <h3>Mug</h3>
         <ul>
@@ -18,6 +12,7 @@
         </ul>
         <button id="buyButton">Buy</button>
     </div>
+
     <div id="theForm">
         <form>
             <label>Your name:</label>
@@ -39,6 +34,7 @@
             <input type="submit" value="Send Message" />
         </form>
     </div>
+    
     <div>
         <div id="loginToggle">Login</div>
         <form id="popup-form">
@@ -59,7 +55,3 @@
             </div>
         </form>
     </div>
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="js/index.js"></script>
-</body>
-</html>
