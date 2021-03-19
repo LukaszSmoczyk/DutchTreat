@@ -7,12 +7,16 @@
   <ItemGroup>
     <Compile Remove="NewFolder1\**" />
     <Compile Remove="NewFolder\**" />
+    <Compile Remove="wwwroot\lib\jquery\**" />
     <Content Remove="NewFolder1\**" />
     <Content Remove="NewFolder\**" />
+    <Content Remove="wwwroot\lib\jquery\**" />
     <EmbeddedResource Remove="NewFolder1\**" />
     <EmbeddedResource Remove="NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\lib\jquery\**" />
     <None Remove="NewFolder1\**" />
     <None Remove="NewFolder\**" />
+    <None Remove="wwwroot\lib\jquery\**" />
   </ItemGroup>
 
   <ItemGroup>
