@@ -29,6 +29,7 @@ namespace DutchTreat
             services.AddDbContext<DutchContext>(options =>
                 options.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
+            services.AddTransient<DutchSeeder>();
             services.AddTransient<IMailService, NullMailService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -47,7 +48,7 @@ namespace DutchTreat
             }
 
             app.UseStaticFiles();
-            app.UseNodeModules();
+//            app.UseNodeModules();
 
             app.UseRouting();
 
