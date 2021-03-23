@@ -30,6 +30,8 @@ namespace DutchTreat
                 options.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<DutchSeeder>();
+
+            services.AddScoped<IDutchRepository, DutchRepository>();
             services.AddTransient<IMailService, NullMailService>();
             services.AddControllersWithViews();
             services.AddRazorPages();
