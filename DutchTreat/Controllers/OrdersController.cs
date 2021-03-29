@@ -1,4 +1,5 @@
-﻿using DutchTreat.Data;
+﻿using AutoMapper;
+using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -15,19 +16,23 @@ namespace DutchTreat.Controllers
     {
         private readonly IDutchRepository _repository;
         private readonly ILogger<ProductsController> _logger;
+        private readonly IMapper _mapper;
 
-        public OrdersController(IDutchRepository repository, ILogger<ProductsController> logger)
-        {
+        
+        public OrdersController(IDutchRepository repository, ILogger<ProductsController> logger, IMapper mapper)
+        { 
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(bool includeItems = true)
         {
             try
             {
-                return Ok(_repository.GetAllOrders());
+                var results = _repository.GetAllOrders(includeItems);
+                return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(results));
             }
             catch (Exception ex)
             {
@@ -43,7 +48,7 @@ namespace DutchTreat.Controllers
             {
                 var order = _repository.GetOrderById(id);
 
-                if (order != null) return Ok(order);
+                if (order != null) return Ok(_mapper.Map<Order, OrderViewModel>(order));
                 else return NotFound();
             }
             catch (Exception ex)
@@ -61,12 +66,7 @@ namespace DutchTreat.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var newOrder = new Order()
-                    {
-                        OrderDate = model.OrderDate,
-                        OrderNumber = model.OrderNumber,
-                        Id = model.OrderId
-                    };
+                    var newOrder = _mapper.Map<OrderViewModel, Order>(model);
 
                     if (newOrder.OrderDate == DateTime.MinValue)
                     {
@@ -75,15 +75,8 @@ namespace DutchTreat.Controllers
                 
                 _repository.AddEntity(newOrder);
                     if (_repository.SaveAll())
-                    {
-                        var viewModel = new OrderViewModel()
-                        {
-                            OrderId = newOrder.Id,
-                            OrderDate = newOrder.OrderDate,
-                            OrderNumber = newOrder.OrderNumber
-                        };
-   
-                    return Created($"/api/orders/{viewModel.OrderId}", viewModel);
+                    {   
+                    return Created($"/api/orders/{newOrder.Id}", _mapper.Map<Order, OrderViewModel>(newOrder));
                     }
                     else
                     {
